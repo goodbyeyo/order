@@ -8,6 +8,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class PartnerCommand {
+
     private final String partnerName;
     private final String businessNo;
     private final String email;
