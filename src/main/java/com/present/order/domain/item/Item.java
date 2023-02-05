@@ -1,11 +1,13 @@
 package com.present.order.domain.item;
 
+import com.google.common.collect.Lists;
 import com.present.order.domain.partner.Partner;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -19,6 +21,14 @@ public class Item {
     private Long partnerId;
     private String itemName;
     private Long itemPrice;
+
+    // Item : ItemOptionGroup = 1 : N
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.PERSIST)
+    private List<ItemOptionGroup> itemOptionGroupList = Lists.newArrayList();
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = )
+//    private List<ItemOptionGroup> itemOptionGroupList = Lists.newArrayList();
 
     @Enumerated(EnumType.STRING)
     private Status status;
