@@ -1,10 +1,12 @@
 package com.present.order.domain.item;
 
 import com.google.common.collect.Lists;
+import com.present.order.common.exception.InvalidParamException;
 import com.present.order.domain.partner.Partner;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,6 +26,7 @@ public class Item {
 
     // Item : ItemOptionGroup = 1 : N
 
+    // mappedBy 참조관계의 주인쪽에 컬럼을 선언
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = CascadeType.PERSIST)
     private List<ItemOptionGroup> itemOptionGroupList = Lists.newArrayList();
 
@@ -42,6 +45,14 @@ public class Item {
 
         private final String description;
     }
+    public Item(Long partnerId, String itemName, Long itemPrice) {
+        if (partnerId == null ) throw new InvalidParamException();
+        if (StringUtils.isEmpty(itemName)) throw new InvalidParamException();
+        if (itemPrice == null) throw new InvalidParamException();
+        this.partnerId = partnerId;
+        this.itemName = itemName;
+        this.itemPrice = itemPrice;
+    }
 
     public void changePrepare() {
         this.status = Status.PREPARE;
@@ -54,5 +65,4 @@ public class Item {
     public void endOfSales() {
         this.status = Status.END_OF_SALES;
     }
-
 }
