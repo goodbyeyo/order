@@ -3,6 +3,7 @@ package com.present.order.domain.item;
 import com.google.common.collect.Lists;
 import com.present.order.common.exception.InvalidParamException;
 import com.present.order.common.util.TokenGenerator;
+import com.present.order.domain.item.optiongroup.ItemOptionGroup;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import org.apache.commons.lang3.StringUtils;
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "items")
-@Getter
 public class Item {
 
     private static final String ITEM_PREFIX = "itm_";
@@ -45,7 +46,7 @@ public class Item {
     public enum Status {
         PREPARE("판매준비중"),
         ON_SALES("판먜중"),
-        END_OF_SALES("판매종료");
+        END_OF_SALE("판매종료");
 
         private final String description;
     }
@@ -70,7 +71,11 @@ public class Item {
         this.status = Status.ON_SALES;
     }
 
+    public void changeEndOfSale() {
+        this.status = Status.END_OF_SALE;
+    }
+
     public void endOfSales() {
-        this.status = Status.END_OF_SALES;
+        this.status = Status.END_OF_SALE;
     }
 }

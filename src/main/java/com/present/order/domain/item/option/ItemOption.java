@@ -2,6 +2,7 @@ package com.present.order.domain.item.option;
 
 import com.present.order.common.exception.InvalidParamException;
 import com.present.order.domain.AbstractEntity;
+import com.present.order.domain.item.optiongroup.ItemOptionGroup;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

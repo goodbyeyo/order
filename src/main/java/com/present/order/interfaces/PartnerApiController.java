@@ -1,8 +1,7 @@
 package com.present.order.interfaces;
 
-import com.present.order.application.partnet.PartnerFacade;
+import com.present.order.application.partner.PartnerFacade;
 import com.present.order.common.response.CommonResponse;
-import com.present.order.domain.partner.PartnerCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

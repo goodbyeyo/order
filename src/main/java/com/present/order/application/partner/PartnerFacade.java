@@ -1,6 +1,5 @@
-package com.present.order.application.partnet;
+package com.present.order.application.partner;
 
-import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
 import com.present.order.domain.notification.NotificationService;
 import com.present.order.domain.partner.PartnerCommand;
 import com.present.order.domain.partner.PartnerInfo;

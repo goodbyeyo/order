@@ -1,6 +1,7 @@
 package com.present.order.domain.item;
 
 import com.present.order.domain.item.option.ItemOption;
+import com.present.order.domain.item.optiongroup.ItemOptionGroup;
 import lombok.Getter;
 import lombok.ToString;
 

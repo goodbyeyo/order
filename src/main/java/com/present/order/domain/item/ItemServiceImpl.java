@@ -29,7 +29,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void changeOnSale(String itemToken) {
         var item = itemReader.getItemBy(itemToken);
-        item.changeOnSale();
+        item.changeOnSales();
     }
 
     @Override
