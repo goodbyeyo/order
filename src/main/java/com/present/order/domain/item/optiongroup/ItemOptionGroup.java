@@ -1,8 +1,10 @@
-package com.present.order.domain.item;
+package com.present.order.domain.item.optiongroup;
 
 import com.google.common.collect.Lists;
 import com.present.order.common.exception.InvalidParamException;
 import com.present.order.domain.AbstractEntity;
+import com.present.order.domain.item.Item;
+import com.present.order.domain.item.option.ItemOption;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,4 +47,9 @@ public class ItemOptionGroup extends AbstractEntity {
         this.itemOptionGroupName = itemOptionGroupName;
     }
 
+    public ItemOptionGroup addItemOption(ItemOption itemOption) {
+        this.itemOptionList.add(itemOption);
+        return this;
+    }
 }
+

@@ -1,4 +1,4 @@
-package com.present.order.domain.item;
+package com.present.order.domain.item.option;
 
 import com.present.order.common.exception.InvalidParamException;
 import com.present.order.domain.AbstractEntity;

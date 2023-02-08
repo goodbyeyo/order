@@ -2,7 +2,8 @@ package com.present.order.domain.item;
 
 import com.google.common.collect.Lists;
 import com.present.order.common.exception.InvalidParamException;
-import com.present.order.domain.partner.Partner;
+import com.present.order.common.util.TokenGenerator;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,15 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "items")
+@Getter
 public class Item {
+
+    private static final String ITEM_PREFIX = "itm_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String itemToken;
     private Long partnerId;
     private String itemName;
     private Long itemPrice;
@@ -45,13 +49,17 @@ public class Item {
 
         private final String description;
     }
+    @Builder
     public Item(Long partnerId, String itemName, Long itemPrice) {
-        if (partnerId == null ) throw new InvalidParamException();
-        if (StringUtils.isEmpty(itemName)) throw new InvalidParamException();
-        if (itemPrice == null) throw new InvalidParamException();
+        if (partnerId == null) throw new InvalidParamException("Item.partnerId");
+        if (StringUtils.isBlank(itemName)) throw new InvalidParamException("Item.itemName");
+        if (itemPrice == null) throw new InvalidParamException("Item.itemPrice");
+
         this.partnerId = partnerId;
+        this.itemToken = TokenGenerator.randomCharacterWithPrefix(ITEM_PREFIX);
         this.itemName = itemName;
         this.itemPrice = itemPrice;
+        this.status = Status.PREPARE;
     }
 
     public void changePrepare() {
