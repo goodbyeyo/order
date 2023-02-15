@@ -18,11 +18,15 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public String registerItem(ItemCommand.RegisterItemRequest command, String partnerToken) {
-        var partner = partnerReader.getPartner(partnerToken);
-        var initItem = command.toEntity(partner.getId());
-        var item = itemStore.store(initItem);
+        Item item = storeItem(command, partnerToken);
         itemOptionSeriesFactory.store(command, item);
         return item.getItemToken();
+    }
+
+    private Item storeItem(ItemCommand.RegisterItemRequest command, String partnerToken) {
+        var partner = partnerReader.getPartner(partnerToken);
+        var initItem = command.toEntity(partner.getId());
+        return itemStore.store(initItem);
     }
 
     @Override
