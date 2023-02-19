@@ -1,4 +1,4 @@
-package com.present.order.interfaces;
+package com.present.order.interfaces.patner;
 
 import com.present.order.application.partner.PartnerFacade;
 import com.present.order.common.response.CommonResponse;
@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class PartnerApiController {
 
     private final PartnerFacade partnerFacade;
+    private final PartnerDtoMapper partnerDtoMapper;
 
     @PostMapping
     public CommonResponse registerPartner(PartnerDto.RegisterRequest request) {
         // 1. 외부에서 전달된 파라미터 dto -> Command, Criteria convert
         // 2. facade 호출 ... PartnerInfo
         // 3. PartnerInfo -> CommonResponse convert and return
-        var command = request.toCommand();
+        var command = partnerDtoMapper.of(request); // var command = request.toCommand();
         var partnerInfo = partnerFacade.registerPartner(command);
         var response = new PartnerDto.RegisterResponse(partnerInfo);
         return CommonResponse.success(response);

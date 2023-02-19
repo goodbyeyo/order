@@ -18,6 +18,9 @@ public class ItemDto {
         private String itemName;
         private Long itemPrice;
         private List<RegisterItemOptionGroupRequest> itemOptionGroupList;
+
+        // basic mapper itemDto -> itemCommand
+        // itemDto 내 collection 요소 -> itemOptionGroupDto -> itemOptionGroupCommand
     }
 
     @Getter

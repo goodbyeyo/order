@@ -1,4 +1,4 @@
-package com.present.order.interfaces;
+package com.present.order.interfaces.patner;
 
 import com.present.order.domain.partner.Partner;
 import com.present.order.domain.partner.PartnerCommand;

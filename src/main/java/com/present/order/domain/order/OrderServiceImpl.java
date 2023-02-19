@@ -3,6 +3,7 @@ package com.present.order.domain.order;
 import com.present.order.domain.order.payment.PaymentProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemSeriesFactory orderItemSeriesFactory;
     private final PaymentProcessor paymentProcessor;
     private final OrderInfoMapper orderInfoMapper;
+
+    @Qualifier(value = "CustomOrderItemSeriesFactory")
+    private final OrderItemSeriesFactory orderItemServiceFactory;
 
     @Override
     @Transactional
