@@ -83,10 +83,34 @@ public class Order extends AbstractEntity {
     }
 
     public void orderComplete() {
+        // 1. 돈을 빼오자말자 서버가 죽어서 아래 로직이 실행이 안되거나
+        // 2. 돈을 빼오자말자 서버가 죽어서 아래 로직이 실행이 되었는데, 보상 트랜잭션이 실행되지 않았다면?
         if (this.status != Status.INIT) throw new IllegalStatusException();
         this.status = Status.ORDER_COMPLETE;
     }
 
+    // TODO - 개별 배송도 구현
+    public void deliveryPrepare() {
+        if (this.status != Status.ORDER_COMPLETE) throw new IllegalStatusException();
+        this.status = Status.DELIVERY_PREPARE;
+        this.getOrderItemList().forEach(OrderItem::deliveryPrepare);
+    }
+
+    // TODO - 개별 배송도 구현
+    public void inDelivery() {
+        if (this.status != Status.DELIVERY_PREPARE) throw new IllegalStatusException();
+        this.status = Status.IN_DELIVERY;
+        this.getOrderItemList().forEach(OrderItem::inDelivery);
+    }
+
+    // TODO - 개별 배송도 구현
+    public void deliveryComplete() {
+        if (this.status != Status.IN_DELIVERY) throw new IllegalStatusException();
+        this.status = Status.DELIVERY_COMPLETE;
+        this.getOrderItemList().forEach(OrderItem::deliveryComplete);
+    }
+
+    // TODO - 개별 배송도 구현
     public boolean isAlreadyPaymentComplete() {
         // return this.status != Status.INIT;
         switch (this.status) {
@@ -97,5 +121,23 @@ public class Order extends AbstractEntity {
                 return true;
         }
         return false;
+    }
+
+    public void updateDeliveryFragment(
+            String receiverName,
+            String receiverPhone,
+            String receiverZipcode,
+            String receiverAddress1,
+            String receiverAddress2,
+            String etcMessage
+    ) {
+        this.deliveryFragment = DeliveryFragment.builder()
+                .receiverName(receiverName)
+                .receiverPhone(receiverPhone)
+                .receiverZipcode(receiverZipcode)
+                .receiverAddress1(receiverAddress1)
+                .receiverAddress2(receiverAddress2)
+                .etcMessage(etcMessage)
+                .build();
     }
 }

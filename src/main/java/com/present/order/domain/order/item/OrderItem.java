@@ -1,6 +1,7 @@
 package com.present.order.domain.order.item;
 
 import com.google.common.collect.Lists;
+import com.present.order.common.exception.IllegalStatusException;
 import com.present.order.common.exception.InvalidParamException;
 import com.present.order.domain.AbstractEntity;
 import com.present.order.domain.order.Order;
@@ -85,5 +86,20 @@ public class OrderItem extends AbstractEntity {
                 .mapToLong(OrderItemOptionGroup::calculateTotalAmount)
                 .sum();
         return (itemPrice + itemOptionTotalAmount) * orderCount;
+    }
+
+    public void deliveryPrepare() {
+        if (this.deliveryStatus != DeliveryStatus.BEFORE_DELIVERY) throw new IllegalStatusException();
+        this.deliveryStatus = DeliveryStatus.DELIVERY_PREPARE;
+    }
+
+    public void inDelivery() {
+        if (this.deliveryStatus != DeliveryStatus.DELIVERY_PREPARE) throw new IllegalStatusException();
+        this.deliveryStatus = DeliveryStatus.DELIVERING;
+    }
+
+    public void deliveryComplete() {
+        if (this.deliveryStatus != DeliveryStatus.DELIVERING) throw new IllegalStatusException();
+        this.deliveryStatus = DeliveryStatus.COMPLETE_DELIVERY;
     }
 }
